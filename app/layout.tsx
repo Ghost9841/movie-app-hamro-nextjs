@@ -2,10 +2,11 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import Navbar from "@/components/navbar"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
-import { FavoritesProvider } from "@/context/favorites-context"
+import { ThemeProvider } from "next-themes"
+import { FavoritesProvider } from "./context/favorites-context"
+import Navbar from "./components/NavBar"
+import { Toaster } from "sonner"
+
 
 const inter = Inter({ subsets: ["latin"] })
 
