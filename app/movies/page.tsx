@@ -1,0 +1,63 @@
+import { Suspense } from "react"
+import { getMovies } from "@/lib/api"
+import MovieGrid from "@/components/movie-grid"
+import Pagination from "@/app/components/pagination"
+import FilterBar from "@/components/filter-bar"
+import { Skeleton } from "@/components/ui/skeleton"
+
+export default async function MoviesPage({
+  searchParams,
+}: {
+  searchParams: { page?: string; query?: string; genre?: string }
+}) {
+  const page = Number(searchParams.page) || 1
+  const query = searchParams.query || ""
+  const genre = searchParams.genre || ""
+
+  const params: Record<string, any> = {
+    limit: 10,
+    page,
+  }
+
+  if (query) {
+    params.query_term = query
+  }
+
+  if (genre) {
+    params.genre = genre
+  }
+
+  const movies = await getMovies(params)
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Browse Movies</h1>
+
+      <FilterBar />
+
+      <Suspense fallback={<MovieGridSkeleton />}>
+        <MovieGrid movies={movies.data.movies} />
+
+        <div className="mt-8">
+          <Pagination currentPage={page} totalPages={Math.ceil(movies.data.movie_count / 10)} />
+        </div>
+      </Suspense>
+    </div>
+  )
+}
+
+function MovieGridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      {Array(10)
+        .fill(0)
+        .map((_, i) => (
+          <div key={i} className="flex flex-col gap-2">
+            <Skeleton className="w-full aspect-[2/3] rounded-lg" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+          </div>
+        ))}
+    </div>
+  )
+}
