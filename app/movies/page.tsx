@@ -1,10 +1,12 @@
 import { Suspense } from "react"
-import { getMovies } from "@/lib/api"
-import MovieGrid from "@/components/movie-grid"
+
+
 import Pagination from "@/app/components/pagination"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import FilterBar from "../components/filter-bar"
+import MovieGrid from "../components/movie-grid"
+import { getMovies } from "../lib/api"
 
 export default async function MoviesPage({
   searchParams,
