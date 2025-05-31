@@ -4,6 +4,7 @@ import { getMovies } from "./lib/api"
 
 
 export default async function Home() {
+  
   const latestMovies = await getMovies({ limit: 10, sort_by: "date_added" })
   const topRatedMovies = await getMovies({ limit: 10, sort_by: "rating" })
 

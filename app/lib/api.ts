@@ -1,5 +1,7 @@
+
 import ytsApi from "./yts-api"
 import type { YtsApiResponse } from "./types"
+
 
 export async function getMovies(params: Record<string, any> = {}): Promise<YtsApiResponse> {
   try {
