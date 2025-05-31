@@ -2,9 +2,8 @@ import { Suspense } from "react"
 import MovieCarousel from "./components/movie-carousel"
 import MovieGrid from "./components/movie-grid"
 import { getMovies } from "./lib/api"
-
 import Loaders from "./components/Loader"
-import MoviesPage from "./movies/page"
+
 
 
 export default async function Home() {

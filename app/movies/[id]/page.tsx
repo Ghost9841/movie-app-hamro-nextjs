@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Star } from "lucide-react"
 import { getMovieDetails } from "@/app/lib/api"
 import FavoriteButton from "@/app/components/favorite-button"
+import { YtsTorrent } from "@/app/lib/types"
 
 export default async function MovieDetailPage({ params }: { params: Promise<{ id: string }> }) {
   // Await the params before accessing properties
@@ -86,7 +87,7 @@ export default async function MovieDetailPage({ params }: { params: Promise<{ id
               <div>
                 <h2 className="text-xl font-semibold mb-2">Downloads</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-                  {movieData.torrents.map((torrent: any) => (
+                  {movieData.torrents.map((torrent: YtsTorrent) => (
                     <div key={torrent.hash} className="border rounded-md p-3">
                       <div className="flex justify-between items-center">
                         <div>
@@ -104,8 +105,9 @@ export default async function MovieDetailPage({ params }: { params: Promise<{ id
           </div>
         </div>
       </div>
-    )
+    );
   } catch (error) {
+    console.error(`Unknown error fetching movies`, error)
     notFound()
   }
 }

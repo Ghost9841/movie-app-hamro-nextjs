@@ -17,7 +17,7 @@ export default async function MoviesPage({
   const query = resolvedSearchParams.query || ""
   const genre = resolvedSearchParams.genre || ""
 
-  const params: Record<string, any> = {
+  const params: Record<string, string | number> = {
     limit: 10,
     page,
   }

@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import { Suspense } from "react"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -11,8 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeToggle } from "./theme-toggle"
 
-
-export default function Navbar() {
+function NavbarContent() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -144,5 +143,34 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+  )
+}
+
+function NavbarFallback() {
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center">
+              <Film className="h-6 w-6 mr-2 text-primary" />
+              <span className="font-bold text-xl">YTS Movies</span>
+            </Link>
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="w-[200px] lg:w-[300px] h-10 bg-gray-200 rounded animate-pulse hidden md:block"></div>
+            <ThemeToggle />
+          </div>
+        </div>
+      </div>
+    </header>
+  )
+}
+
+export default function Navbar() {
+  return (
+    <Suspense fallback={<NavbarFallback />}>
+      <NavbarContent />
+    </Suspense>
   )
 }

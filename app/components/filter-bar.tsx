@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import { Suspense } from "react"
 import { useState, useEffect } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -35,7 +35,7 @@ const genres = [
   "Western",
 ]
 
-export default function FilterBar() {
+function FilterBarContent() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -118,5 +118,28 @@ export default function FilterBar() {
         </Select>
       </div>
     </div>
+  )
+}
+
+function FilterBarFallback() {
+  return (
+    <div className="mb-8 flex flex-col sm:flex-row gap-4">
+      <div className="flex-1">
+        <div className="relative">
+          <div className="w-full h-10 bg-gray-200 rounded animate-pulse"></div>
+        </div>
+      </div>
+      <div className="w-full sm:w-48">
+        <div className="w-full h-10 bg-gray-200 rounded animate-pulse"></div>
+      </div>
+    </div>
+  )
+}
+
+export default function FilterBar() {
+  return (
+    <Suspense fallback={<FilterBarFallback />}>
+      <FilterBarContent />
+    </Suspense>
   )
 }

@@ -1,8 +1,9 @@
 import ytsApi from "./yts-api"
 import type { YtsApiResponse } from "./types"
+import {  AxiosError } from "axios"
 
 // Helper function to safely log axios errors
-function logAxiosError(error: any) {
+function logAxiosError(error: AxiosError) {
   if (error.response) {
     // Server responded with error status
     console.error("API Error Response:", {
@@ -27,14 +28,18 @@ function logAxiosError(error: any) {
   }
 }
 
-export async function getMovies(params: Record<string, any> = {}): Promise<YtsApiResponse> {
+export async function getMovies(params: Record<string, string | number> = {}): Promise<YtsApiResponse> {
   try {
     const response = await ytsApi.get("/list_movies.json", { params })
     return response.data
-  } catch (error) {
-    console.error("Error fetching movies:")
-    logAxiosError(error)
-    
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error(`Error fetching movies:`)
+      logAxiosError(error)
+    } else {
+      console.error(`Unknown error fetching movies`, error)
+    }
+
     return {
       status: "error",
       status_message: "Failed to fetch movies",
@@ -60,10 +65,14 @@ export async function getMovieDetails(movieId: string): Promise<YtsApiResponse> 
       params: { movie_id: movieId },
     })
     return response.data
-  } catch (error) {
-    console.error(`Error fetching movie details for ID ${movieId}:`)
-    logAxiosError(error)
-    
+  }
+  catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error(`Error fetching movie details for ID ${movieId}:`)
+      logAxiosError(error)
+    } else {
+      console.error(`Unknown error fetching movie details for ID ${movieId}:`, error)
+    }
     // Return fallback data instead of throwing
     return {
       status: "error",
@@ -90,10 +99,13 @@ export async function getMovieSuggestions(movieId: string): Promise<YtsApiRespon
       params: { movie_id: movieId },
     })
     return response.data
-  } catch (error) {
-    console.error(`Error fetching movie suggestions for ID ${movieId}:`)
-    logAxiosError(error)
-    
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      console.error(`Error fetching movie details for ID ${movieId}:`)
+      logAxiosError(error)
+    } else {
+      console.error(`Unknown error fetching movie details for ID ${movieId}:`, error)
+    }
     return {
       status: "error",
       status_message: "Failed to fetch movie suggestions",

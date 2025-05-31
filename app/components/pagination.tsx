@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -7,10 +8,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 interface PaginationProps {
   currentPage: number
   totalPages: number
-  pageParam? :string
+  pageParam?: string
 }
 
-export default function Pagination({ currentPage, totalPages }: PaginationProps) {
+function PaginationContent({ currentPage, totalPages }: Omit<PaginationProps, 'pageParam'>) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -89,5 +90,25 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>
+  )
+}
+
+function PaginationFallback() {
+  return (
+    <div className="flex justify-center items-center space-x-2">
+      <div className="h-9 w-9 bg-gray-200 rounded animate-pulse"></div>
+      <div className="h-8 w-8 bg-gray-200 rounded animate-pulse"></div>
+      <div className="h-8 w-8 bg-gray-200 rounded animate-pulse"></div>
+      <div className="h-8 w-8 bg-gray-200 rounded animate-pulse"></div>
+      <div className="h-9 w-9 bg-gray-200 rounded animate-pulse"></div>
+    </div>
+  )
+}
+
+export default function Pagination({ currentPage, totalPages }: PaginationProps) {
+  return (
+    <Suspense fallback={<PaginationFallback />}>
+      <PaginationContent currentPage={currentPage} totalPages={totalPages} />
+    </Suspense>
   )
 }
