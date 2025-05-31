@@ -3,7 +3,6 @@ import axios from "axios"
 // Create an Axios instance with the YTS API base URL
 const ytsApi = axios.create({
   baseURL: "https://yts.mx/api/v2/",
-  timeout: 10000, // Set a timeout of 10 seconds
 })
 
 // Request Interceptor

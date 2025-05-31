@@ -1,6 +1,9 @@
+import { Suspense } from "react"
 import MovieCarousel from "./components/movie-carousel"
 import MovieGrid from "./components/movie-grid"
 import { getMovies } from "./lib/api"
+
+import Loaders from "./components/Loader"
 
 
 export default async function Home() {
@@ -10,8 +13,10 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <section className="mb-12">
+      <section className="mb-12 z-10">
+        <Suspense fallback={<Loaders/>}>
         <MovieCarousel movies={latestMovies.data.movies} />
+        </Suspense>
       </section>
 
       <section className="mb-12">

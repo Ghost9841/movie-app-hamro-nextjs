@@ -1,8 +1,6 @@
 import { Suspense } from "react"
 
-
 import Pagination from "@/app/components/pagination"
-
 import { Skeleton } from "@/components/ui/skeleton"
 import FilterBar from "../components/filter-bar"
 import MovieGrid from "../components/movie-grid"
@@ -11,11 +9,13 @@ import { getMovies } from "../lib/api"
 export default async function MoviesPage({
   searchParams,
 }: {
-  searchParams: { page?: string; query?: string; genre?: string }
+  searchParams: Promise<{ page?: string; query?: string; genre?: string }>
 }) {
-  const page = Number(searchParams.page) || 1
-  const query = searchParams.query || ""
-  const genre = searchParams.genre || ""
+  // Await searchParams before accessing its properties
+  const resolvedSearchParams = await searchParams
+  const page = Number(resolvedSearchParams.page) || 1
+  const query = resolvedSearchParams.query || ""
+  const genre = resolvedSearchParams.genre || ""
 
   const params: Record<string, any> = {
     limit: 10,

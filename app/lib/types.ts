@@ -36,7 +36,7 @@ export interface YtsMovie {
   language: string // e.g., "fi"
   mpa_rating: string // e.g., ""
   background_image: string // e.g., "https://yts.mx/assets/images/movies/ariel_1988/background.jpg"
-  background_image_original: string // e.g., "https://yts.mx/assets/images/movies/ariel_1988/background.jpg"
+  background_image_original?: string // e.g., "https://yts.mx/assets/images/movies/ariel_1988/background.jpg"
   small_cover_image: string // e.g., "https://yts.mx/assets/images/movies/ariel_1988/small-cover.jpg"
   medium_cover_image: string // e.g., "https://yts.mx/assets/images/movies/ariel_1988/medium-cover.jpg"
   large_cover_image: string // e.g., "https://yts.mx/assets/images/movies/ariel_1988/large-cover.jpg"

@@ -6,8 +6,9 @@ import { Star } from "lucide-react"
 import { getMovieDetails } from "@/app/lib/api"
 import FavoriteButton from "@/app/components/favorite-button"
 
-export default async function MovieDetailPage({ params }: { params: { id: string } }) {
-  const movieId = params.id
+export default async function MovieDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  // Await the params before accessing properties
+  const { id: movieId } = await params
 
   try {
     const movie = await getMovieDetails(movieId)

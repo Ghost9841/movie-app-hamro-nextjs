@@ -51,7 +51,7 @@ export default function MovieCarousel({ movies }: MovieCarouselProps) {
     >
       <div className="aspect-[21/9] w-full relative">
         <Image
-          src={currentMovie.background_image_original || currentMovie.background_image}
+          src={currentMovie.medium_cover_image  || currentMovie.background_image}
           alt={currentMovie.title}
           fill
           priority

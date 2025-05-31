@@ -1,9 +1,10 @@
+'use client'
 import React from 'react';
 import styled from 'styled-components';
 
 const Loaders = () => {
   return (
-    <StyledWrapper>
+    <StyledWrapper className='z-50'>
       <div className="loader">
         <span className="bar" />
         <span className="bar" />
